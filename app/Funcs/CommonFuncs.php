@@ -12,15 +12,28 @@ date_default_timezone_set('America/Sao_Paulo');
 class CommonFuncs
 {
 
+    public $db;
+    public $hostname = '';
+    public $username = '';
+    public $password = '';
+    public function __construct()
+    {
+
+        $this->db = getenv('DB_DATABASE');
+        $this->hostname = getenv('DB_HOST');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB_PASSWORD');
+    }
+
     /**
      * Instancia uma conexão PDO com o banco informado!
      */
-    public function conn($db_name = false, $host = getenv('DB_HOST'))
+    public function conn($db_name = false, $host = $this->hostname)
     {
 
-        $username = getenv('DB_USERNAME');
+        $username = $this->username;
 
-        $password = getenv('DB_PASSWORD');
+        $password = $this->password;
 
         if ($db_name == false) {
             return 'Erro: Banco não informado!';
